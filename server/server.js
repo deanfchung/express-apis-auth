@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 const port = 3000
@@ -18,10 +18,25 @@ if (process.env.NODE_ENV === 'production') {
    })
 }
 
-//global error handler
-app.use((err, req, res, next) => {
-   console.error(err.stack)
-   res.status(500).send('Something broke!')
+//uncaught route handler
+app.get('*', (req, res) => {
+   res.sendStatus(404)
 })
 
-app.listen(port, () => console.log(`server listening on port ${port}!`)) //listens on port 3000 -> http://localhost:3000/
+//global error handler
+app.use((err, req, res, next) => {
+   const defaultErr = {
+      log: 'Express error handler caught unknown middleware error',
+      status: 400,
+      message: { err: 'An error occurred' },
+   }
+   const errorObj = Object.assign(defaultErr, err)
+   console.error(errorObj.log)
+   res.status(errorObj.status).json(errorObj.message)
+})
+
+app.listen(port, () => {
+   console.log(`Server listening on port: ${PORT}`)
+})
+
+module.exports = app
