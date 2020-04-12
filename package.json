@@ -1,17 +1,18 @@
 {
-   "name": "react-redux-build",
+   "name": "todo-app",
    "version": "1.0.0",
    "description": "",
    "main": "./src/index.jsx",
    "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "serve": "cross-env NODE_ENV=development webpack-dev-server --hot",
+      "start": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
       "build": "cross-env NODE_ENV=production node server/server.js & NODE_ENV=production webpack",
-      "dev": "cross-env NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack-dev-server --open --hot"
+      "dev": "cross-env NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack-dev-server --open --hot",
+      "serve": "nodemon server/server.js"
    },
    "repository": {
       "type": "git",
-      "url": "git://github.com/deanfchung/React-Redux-Build/.git"
+      "url": "git://github.com/deanfchung/Todo-App/.git"
    },
    "nodemonConfig": {
       "ignore": [
@@ -22,9 +23,12 @@
    "author": "Dean Chung",
    "license": "ISC",
    "dependencies": {
+      "bcrypt": "^4.0.1",
       "body-parser": "^1.19.0",
       "cors": "^2.8.5",
+      "dotenv": "^8.2.0",
       "express": "^4.12.3",
+      "mongoose": "^5.9.7",
       "react": "^16.13.0",
       "react-dom": "^16.13.0",
       "react-redux": "^7.2.0",
