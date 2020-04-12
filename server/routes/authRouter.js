@@ -4,7 +4,8 @@ const authController = require('../controllers/authController')
 
 auth.post('/login', authController.login, (req, res) => {
    res.status(200).json({
-      data: { userId: res.locals.id, token: res.locals.token, message: 'user verified' },
+      id: res.locals.id,
+      message: 'user verified',
    })
 })
 
