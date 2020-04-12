@@ -45,6 +45,9 @@ const config = {
          '/api': 'http://localhost:3000',
       },
    },
+   resolve: {
+      extensions: ['.js', '.jsx'],
+   },
    plugins: [
       new HtmlWebPackPlugin({
          template: './index.html',

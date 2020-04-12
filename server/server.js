@@ -13,8 +13,7 @@ app.use(bodyParser.json())
 
 const PORT = 3000
 
-const userRouter = require('./routes/userRouter')
-const userController = require('./controllers/userController')
+const authRouter = require('./routes/authRouter')
 
 if (process.env.NODE_ENV === 'production') {
    app.use('/', express.static(path.join(__dirname, '../build')))
@@ -23,10 +22,7 @@ if (process.env.NODE_ENV === 'production') {
    })
 }
 
-app.post('/register', userController.newUser, (req, res) => {
-   console.log('user successfuly created')
-   res.status(200).json({ data: { id: res.locals.id, message: 'user successfully created' } })
-})
+app.use('/auth', authRouter)
 
 //uncaught route handler
 app.get('*', (req, res) => {
