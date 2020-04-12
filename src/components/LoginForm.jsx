@@ -11,7 +11,6 @@ const LoginForm = () => {
     const userChange = (e) => {
         e.preventDefault()
         setUsername(e.target.value)
-        console.log(e.target.value)
     }
     const passChange = (e) => {
         e.preventDefault()
@@ -22,7 +21,7 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
         const response = await serverURL.post('/auth/login', { username, password })
-        console.log('response', response)
+        console.log('token: ', response.data.token)
     }
     return (
         <Div className='container'>

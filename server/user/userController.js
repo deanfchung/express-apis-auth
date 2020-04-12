@@ -1,15 +1,16 @@
-const User = require('../models/userModel')
-const authController = {}
+const User = require('./userModel')
+const userController = {}
 const bcrypt = require('bcrypt')
+const { newToken } = require('../utils/auth')
 
-authController.newUser = (req, res, next) => {
+userController.newUser = (req, res, next) => {
    const { username, password } = req.body
    const salt = parseInt(process.env.SALT)
    bcrypt.hash(password, salt, async (err, hash) => {
       if (err) return next({ log: 'ERROR: couldnt hash password', message: { err } })
       try {
-         const response = await User.create({ username, password: hash })
-         res.locals.id = response._id
+         const user = await User.create({ username, password: hash })
+         res.locals.token = newToken(user)
          return next()
       } catch (e) {
          return next({ log: 'ERROR: couldnt save user in db', message: { err: e } })
@@ -17,18 +18,17 @@ authController.newUser = (req, res, next) => {
    })
 }
 
-authController.login = async (req, res, next) => {
+userController.login = async (req, res, next) => {
    const { username, password } = req.body
    try {
-      const response = await User.findOne({ username })
-      console.log('response', response)
-      const match = await bcrypt.compare(password, response.password)
+      const user = await User.findOne({ username })
+      const match = await bcrypt.compare(password, user.password)
       if (match) {
-         res.locals.id = response._id
+         res.locals.token = newToken(user)
          return next()
       }
    } catch (err) {
       return next({ log: 'ERROR: couldnt verify user', message: { err } })
    }
 }
-module.exports = authController
+module.exports = userController

@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 
 const PORT = 3000
 
-const authRouter = require('./routes/authRouter')
+const userRouter = require('./user/userRouter')
 
 if (process.env.NODE_ENV === 'production') {
    app.use('/', express.static(path.join(__dirname, '../build')))
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
    })
 }
 
-app.use('/auth', authRouter)
+app.use('/auth', userRouter)
 
 //uncaught route handler
 app.get('*', (req, res) => {
