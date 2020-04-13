@@ -6,13 +6,10 @@ import styled from 'styled-components'
 import { setUsername, setPassword } from '../actions';
 import { useHistory } from 'react-router-dom';
 
-
 const LoginForm = () => {
-    const history = useHistory()
+    const { username, password } = useSelector(state => state.auth)
     const dispatch = useDispatch()
-    const auth = useSelector(state => state.auth)
-    const username = auth.username
-    const password = auth.password
+    const history = useHistory()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -20,6 +17,7 @@ const LoginForm = () => {
         setPassword('')
         history.push('/todos')
     }
+
     return (
         <Div className='container'>
             <Form id='form' onSubmit={(e) => { handleSubmit(e) }}>

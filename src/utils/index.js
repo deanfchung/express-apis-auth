@@ -1,4 +1,4 @@
-import serverURL from '../apis'
+import serverURL from './apis'
 
 export const validateUser = (username, password) => {
    return new Promise(async (res) => {
