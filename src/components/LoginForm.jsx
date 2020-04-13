@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components'
-import serverURL from '../apis';
+import { setUsername, setPassword } from '../actions';
+import { useHistory } from 'react-router-dom';
+
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const history = useHistory()
+    const dispatch = useDispatch()
+    const auth = useSelector(state => state.auth)
+    const username = auth.username
+    const password = auth.password
 
-    const userChange = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        setUsername(e.target.value)
-    }
-    const passChange = (e) => {
-        e.preventDefault()
-        setPassword(e.target.value)
-
-    }
-
-    const handleLogin = async (e) => {
-        e.preventDefault()
-        const response = await serverURL.post('/auth/login', { username, password })
-        console.log('token: ', response.data.token)
+        setUsername('')
+        setPassword('')
+        history.push('/todos')
     }
     return (
         <Div className='container'>
-            <Form id='form' onSubmit={e => { handleLogin(e) }}>
+            <Form id='form' onSubmit={(e) => { handleSubmit(e) }}>
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
-                    <Form.Control placeholder="Enter username" value={username} onChange={(e) => userChange(e)} />
+                    <Form.Control placeholder="Enter username" value={username} onChange={(e) => { dispatch(setUsername(e.target.value)) }} />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => passChange(e)} />
+                    <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => dispatch(setPassword(e.target.value))} />
                 </Form.Group>
                 <Button variant="primary" type='submit'>
                     Login

@@ -1,8 +1,24 @@
-import * as types from './types'
+import * as types from '../utils/types'
+import { validateUser } from '../utils'
+import serverURL from '../apis'
 
-export const dummyAction = (payload) => {
+export const setUsername = (username) => {
    return {
-      type: types.DUMMY_ACTION, //required
-      payload, //optional
+      type: types.USER_CHANGE,
+      username,
+   }
+}
+
+export const setPassword = (password) => {
+   return {
+      type: types.PASS_CHANGE,
+      password,
+   }
+}
+
+export const submitForm = (token) => {
+   return {
+      type: types.AUTH,
+      token,
    }
 }
