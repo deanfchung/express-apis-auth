@@ -1,6 +1,4 @@
 import * as types from '../utils/types'
-import { validateUser } from '../utils'
-import serverURL from '../apis'
 
 export const setUsername = (username) => {
    return {

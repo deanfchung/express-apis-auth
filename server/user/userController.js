@@ -1,7 +1,8 @@
 const User = require('./userModel')
-const userController = {}
 const bcrypt = require('bcrypt')
 const { newToken } = require('../utils/auth')
+
+const userController = {}
 
 userController.newUser = (req, res, next) => {
    const { username, password } = req.body
